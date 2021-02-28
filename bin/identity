@@ -1,0 +1,22 @@
+#!/bin/sh
+function usage {
+	echo usage: $0 n 1>&2
+	exit 127
+}
+
+if test $# -lt 1; then
+	usage
+fi
+
+n=$(echo $1 | bc)
+
+if test $n -lt 1; then
+	usage
+fi
+
+echo $n $n
+
+for i in $(seq 0 $(echo "$n*$n-1" | bc)); do
+	echo "($i/$n==$i%$n)";
+done | bc | xargs -n $n echo
+
